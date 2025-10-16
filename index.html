@@ -1,0 +1,50 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyD 앱 다운로드</title>
+    <script>
+        // OS 감지 및 리다이렉트
+        function detectOS() {
+            const ua = navigator.userAgent;
+            
+            if (/android/i.test(ua)) {
+                return 'android';
+            }
+            if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+                return 'ios';
+            }
+            return 'other';
+        }
+        
+        window.onload = function() {
+            const os = detectOS();
+            const redirectUrls = {
+                'android': 'https://play.google.com/store/apps/details?id=io.snplab.myd',
+                'ios': 'https://apps.apple.com/kr/app/id1576612543',
+                'other': 'https://myd.world/'
+            };
+            
+            window.location.href = redirectUrls[os];
+        };
+    </script>
+    <script>
+    // 2초 후 리다이렉트 (사용자에게 메시지 표시 시간)
+    setTimeout(() => {
+        const ua = navigator.userAgent;
+        if (/android/i.test(ua)) {
+            location.href = 'https://play.google.com/store/apps/details?id=io.snplab.myd';
+        } else if (/iPad|iPhone|iPod/.test(ua)) {
+            location.href = 'https://apps.apple.com/kr/app/id1576612543';
+        } else {
+            // 데스크톱 사용자를 위한 선택 페이지
+            document.getElementById('redirect-message').style.display = 'none';
+            document.getElementById('choice-page').style.display = 'block';
+        }
+    }, 2000);
+</script>
+</head>
+
+</html>
